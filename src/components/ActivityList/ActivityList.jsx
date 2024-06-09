@@ -83,9 +83,7 @@ const ActivityList = ({ list, onAddItem }) => {
         <ActivityCard key={index} item={item} />
       ))}
 
-      <ButtonsWrapper>
-        <Button text="Start workout" onClick={onStartWorkout} />
-      </ButtonsWrapper>
+      <Button text="Start workout" onClick={onStartWorkout} />
     </ListWrapper>
   );
 };
