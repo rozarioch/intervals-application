@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import ActivityCard from "../ActivityCard/ActivityCard";
 import { ButtonsWrapper, ListWrapper } from "./ActivityList.styles";
+import Button from "../Button/Button";
 
 const ActivityList = ({ list, onAddItem }) => {
   const [activityList, setActivityList] = useState(list);
@@ -83,7 +84,7 @@ const ActivityList = ({ list, onAddItem }) => {
       ))}
 
       <ButtonsWrapper>
-        <button onClick={onStartWorkout}>Start workout</button>
+        <Button onClick={onStartWorkout}>Start workout</Button>
       </ButtonsWrapper>
     </ListWrapper>
   );
