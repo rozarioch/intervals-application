@@ -1,28 +1,52 @@
 import React, { useState, useEffect } from "react";
 import ActivityCard from "../ActivityCard/ActivityCard";
 import { ButtonsWrapper, ListWrapper } from "./ActivityList.styles";
-import Button from "../Button/Button";
+import { Button } from "@mui/material";
+import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 
 const ActivityList = ({ list, onAddItem }) => {
   const [activityList, setActivityList] = useState(list);
   const [spokenFlags, setSpokenFlags] = useState([]);
+  const [voices, setVoices] = useState([]);
+  const [selectedVoice, setSelectedVoice] = useState(null);
 
   useEffect(() => {
+    // Initialize the activity list with remaining time
     setActivityList(
-      list.map((item) => ({ ...item, remainingTime: item.seconds }))
+      list.map((item) => ({
+        ...item,
+        remainingTime: item.seconds,
+      }))
     );
     // Initialize spokenFlags to false for each activity
     setSpokenFlags(Array(list.length).fill(false));
-  }, [list]);
+
+    // Fetch available voices
+    const fetchVoices = () => {
+      const availableVoices = window.speechSynthesis.getVoices();
+      console.log("availableVoices", availableVoices);
+      setVoices(availableVoices);
+      if (availableVoices.length > 0 && !selectedVoice) {
+        setSelectedVoice(availableVoices[1]);
+        // setSelectedVoice(availableVoices[15]);
+      }
+    };
+
+    if (window.speechSynthesis.onvoiceschanged !== undefined) {
+      window.speechSynthesis.onvoiceschanged = fetchVoices;
+    } else {
+      fetchVoices();
+    }
+  }, [list, selectedVoice]);
 
   useEffect(() => {
     activityList.forEach((item, index) => {
-      const minutes = Math.floor(item.remainingTime / 60);
-      const seconds = item.remainingTime % 60;
       if (item.status === "active" && !spokenFlags[index]) {
-        const utterance = new SpeechSynthesisUtterance(
-          `${item.name} for ${minutes} minutes and ${seconds} seconds`
-        );
+        const utterance = new SpeechSynthesisUtterance(item.name);
+        if (selectedVoice) {
+          console.log("selectedVoice", selectedVoice);
+          utterance.voice = selectedVoice;
+        }
         window.speechSynthesis.speak(utterance);
         setSpokenFlags((prevFlags) => {
           const newFlags = [...prevFlags];
@@ -31,7 +55,7 @@ const ActivityList = ({ list, onAddItem }) => {
         });
       }
     });
-  }, [activityList, spokenFlags]);
+  }, [activityList, spokenFlags, selectedVoice]);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -72,7 +96,6 @@ const ActivityList = ({ list, onAddItem }) => {
     for (const [index, value] of activityList.entries()) {
       await showMessageWithDelay(value, index);
     }
-    // Reset spokenFlags after workout is completed
     setSpokenFlags(Array(activityList.length).fill(false));
   }
 
@@ -82,8 +105,9 @@ const ActivityList = ({ list, onAddItem }) => {
       {activityList.map((item, index) => (
         <ActivityCard key={index} item={item} />
       ))}
-
-      <Button text="Start workout" onClick={onStartWorkout} />
+      <Button variant="contained" onClick={onStartWorkout}>
+        Start your workout
+      </Button>
     </ListWrapper>
   );
 };
