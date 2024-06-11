@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/intervals-application/static/css/main.90674601.css",
-    "main.js": "/intervals-application/static/js/main.8dce94c9.js",
+    "main.js": "/intervals-application/static/js/main.cddd4dc7.js",
     "index.html": "/intervals-application/index.html",
     "main.90674601.css.map": "/intervals-application/static/css/main.90674601.css.map",
-    "main.8dce94c9.js.map": "/intervals-application/static/js/main.8dce94c9.js.map"
+    "main.cddd4dc7.js.map": "/intervals-application/static/js/main.cddd4dc7.js.map"
   },
   "entrypoints": [
     "static/css/main.90674601.css",
-    "static/js/main.8dce94c9.js"
+    "static/js/main.cddd4dc7.js"
   ]
 }
