@@ -12,6 +12,7 @@ import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { TimePicker } from "@mui/x-date-pickers/TimePicker";
+import { DesktopTimePicker } from "@mui/x-date-pickers/DesktopTimePicker";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { styled } from "@mui/material/styles";
 import Dialog from "@mui/material/Dialog";
@@ -101,7 +102,7 @@ const ActivityForm = ({ onAddItem }) => {
             />
 
             <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <TimePicker
+              <DesktopTimePicker
                 views={["minutes", "seconds"]}
                 format="mm:ss"
                 onChange={(value) => setTimeValue(value)}

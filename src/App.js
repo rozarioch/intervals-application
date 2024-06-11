@@ -18,7 +18,7 @@ function App() {
     <div className={styles.root}>
       <h1>Activity Timer App</h1>
       <ActivityForm onAddItem={onAddItem} />
-      <ActivityList list={activityList} />
+      {activityList.length !== 0 && <ActivityList list={activityList} />}
     </div>
   );
 }
