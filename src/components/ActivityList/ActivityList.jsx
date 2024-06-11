@@ -24,7 +24,6 @@ const ActivityList = ({ list, onAddItem, setIsStarted, isStarted }) => {
     // Fetch available voices
     const fetchVoices = () => {
       const availableVoices = window.speechSynthesis.getVoices();
-      console.log("availableVoices", availableVoices);
       setVoices(availableVoices);
       if (availableVoices.length > 0 && !selectedVoice) {
         setSelectedVoice(availableVoices[1]);
@@ -44,7 +43,6 @@ const ActivityList = ({ list, onAddItem, setIsStarted, isStarted }) => {
       if (item.status === "active" && !spokenFlags[index]) {
         const utterance = new SpeechSynthesisUtterance(item.name);
         if (selectedVoice) {
-          console.log("selectedVoice", selectedVoice);
           utterance.voice = selectedVoice;
         }
         window.speechSynthesis.speak(utterance);
@@ -102,7 +100,6 @@ const ActivityList = ({ list, onAddItem, setIsStarted, isStarted }) => {
 
   async function onFinishWorkout() {
     setIsStarted(false);
-    console.log("Should add finishing functionality");
     // for (const [index, value] of activityList.entries()) {
     //   await showMessageWithDelay(value, index);
     // }

@@ -5,6 +5,7 @@ export const CardWrapper = styled.div`
   border: 1px solid #ccc;
   display: flex;
   flex-direction: row;
+  align-items: center;
   justify-content: space-between;
   border-radius: 4px;
   width: 100%;
@@ -31,6 +32,6 @@ export const ActivityName = styled.div`
 `;
 
 export const ActivityTime = styled.div`
-  font-size: 24px;
+  font-size: 18px;
   font-weight: bold;
 `;
