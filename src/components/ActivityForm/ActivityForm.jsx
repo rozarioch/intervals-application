@@ -32,7 +32,7 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   },
 }));
 
-const ActivityForm = ({ onAddItem }) => {
+const ActivityForm = ({ onAddItem, isStarted }) => {
   const { register, handleSubmit } = useForm();
 
   const [open, setOpen] = React.useState(false);
@@ -60,7 +60,7 @@ const ActivityForm = ({ onAddItem }) => {
 
   return (
     <>
-      <Button variant="outlined" onClick={handleClickOpen}>
+      <Button variant="outlined" onClick={handleClickOpen} disabled={isStarted}>
         Add new activity
       </Button>
       <BootstrapDialog

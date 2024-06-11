@@ -4,7 +4,7 @@ import { ButtonsWrapper, ListWrapper } from "./ActivityList.styles";
 import { Button } from "@mui/material";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 
-const ActivityList = ({ list, onAddItem }) => {
+const ActivityList = ({ list, onAddItem, setIsStarted, isStarted }) => {
   const [activityList, setActivityList] = useState(list);
   const [spokenFlags, setSpokenFlags] = useState([]);
   const [voices, setVoices] = useState([]);
@@ -93,10 +93,20 @@ const ActivityList = ({ list, onAddItem }) => {
   }
 
   async function onStartWorkout() {
+    setIsStarted(true);
     for (const [index, value] of activityList.entries()) {
       await showMessageWithDelay(value, index);
     }
     setSpokenFlags(Array(activityList.length).fill(false));
+  }
+
+  async function onFinishWorkout() {
+    setIsStarted(false);
+    console.log("Should add finishing functionality");
+    // for (const [index, value] of activityList.entries()) {
+    //   await showMessageWithDelay(value, index);
+    // }
+    // setSpokenFlags(Array(activityList.length).fill(false));
   }
 
   return (
@@ -105,9 +115,20 @@ const ActivityList = ({ list, onAddItem }) => {
       {activityList.map((item, index) => (
         <ActivityCard key={index} item={item} />
       ))}
-      <Button variant="contained" onClick={onStartWorkout}>
-        Start your workout
-      </Button>
+      {isStarted ? (
+        <>
+          <Button variant="outlined" color="warning" onClick={onFinishWorkout}>
+            Pause your workout
+          </Button>
+          <Button variant="contained" color="error" onClick={onFinishWorkout}>
+            Finish your workout
+          </Button>
+        </>
+      ) : (
+        <Button variant="contained" onClick={onStartWorkout}>
+          Start your workout
+        </Button>
+      )}
     </ListWrapper>
   );
 };

@@ -7,6 +7,8 @@ import ActivityList from "./components/ActivityList/ActivityList";
 function App() {
   const [activityList, setActivityList] = useState([]);
 
+  const [isStarted, setIsStarted] = useState(false);
+
   const onAddItem = (props) => {
     setActivityList((prev) => [
       ...prev,
@@ -17,8 +19,14 @@ function App() {
   return (
     <div className={styles.root}>
       <h1>Activity Timer App</h1>
-      <ActivityForm onAddItem={onAddItem} />
-      {activityList.length !== 0 && <ActivityList list={activityList} />}
+      <ActivityForm onAddItem={onAddItem} isStarted={isStarted} />
+      {activityList.length !== 0 && (
+        <ActivityList
+          list={activityList}
+          setIsStarted={setIsStarted}
+          isStarted={isStarted}
+        />
+      )}
     </div>
   );
 }
